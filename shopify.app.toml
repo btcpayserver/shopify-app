@@ -3,11 +3,11 @@
 client_id = "75e5453a33db2962a714dda480eea008"
 name = "btcpayserverdemoplugin"
 handle = "btcpayserverdemoplugin"
-application_url = "https://vertex-tanks-asus-plans.trycloudflare.com"
+application_url = "https://btcpayshopifyplugin.vercel.app/"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = true
+automatically_update_urls_on_dev = false
 dev_store_url = "quickstart-4c9539b2.myshopify.com"
 include_config_on_deploy = true
 
@@ -16,10 +16,12 @@ include_config_on_deploy = true
 scopes = ""
 
 [auth]
+# https://smithsonian-alice-faced-vs.trycloudflare.com/  
+# shopify app config push
 redirect_urls = [
-  "https://vertex-tanks-asus-plans.trycloudflare.com/auth/callback",
-  "https://vertex-tanks-asus-plans.trycloudflare.com/auth/shopify/callback",
-  "https://vertex-tanks-asus-plans.trycloudflare.com/api/auth/callback"
+  "https://btcpayshopifyplugin.vercel.app/auth/callback",
+  "https://btcpayshopifyplugin.vercel.app/auth/shopify/callback",
+  "https://btcpayshopifyplugin.vercel.app/api/auth/callback"
 ]
 
 [webhooks]
