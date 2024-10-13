@@ -2,8 +2,7 @@
   "name": "btcpayserverdemoplugin",
   "private": true,
   "scripts": {
-    "build": "remix vite:build",
-    "postinstall": "prisma generate",
+    "build": "prisma generate && remix vite:build",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
