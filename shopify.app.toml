@@ -3,7 +3,7 @@
 client_id = "75e5453a33db2962a714dda480eea008"
 name = "btcpayserverdemoplugin"
 handle = "btcpayserverdemoplugin"
-application_url = "https://btcpayshopifyplugin.vercel.app/"
+application_url = "https://pit-statement-kissing-fotos.trycloudflare.com/"
 embedded = true
 
 [build]
@@ -16,12 +16,10 @@ include_config_on_deploy = true
 scopes = ""
 
 [auth]
-# https://smithsonian-alice-faced-vs.trycloudflare.com/  
-# shopify app config push
 redirect_urls = [
-  "https://btcpayshopifyplugin.vercel.app/auth/callback",
-  "https://btcpayshopifyplugin.vercel.app/auth/shopify/callback",
-  "https://btcpayshopifyplugin.vercel.app/api/auth/callback"
+  "https://pit-statement-kissing-fotos.trycloudflare.com/auth/callback",
+  "https://pit-statement-kissing-fotos.trycloudflare.com/auth/shopify/callback",
+  "https://pit-statement-kissing-fotos.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

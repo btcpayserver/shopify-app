@@ -28,7 +28,7 @@ function Extension() {
   const { currencyCode, amount } = useTotalAmount();
   const instructions = useInstructions();
 
-  const shopifyApplicaitonUrl = 'https://diffs-rays-its-guitar.trycloudflare.com';
+  const shopifyApplicaitonUrl = 'https://pit-statement-kissing-fotos.trycloudflare.com';
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [btcPayUrl, setBtcPayUrl] = useState(null);
