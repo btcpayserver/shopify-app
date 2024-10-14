@@ -3,7 +3,7 @@
 client_id = "75e5453a33db2962a714dda480eea008"
 name = "btcpayserverdemoplugin"
 handle = "btcpayserverdemoplugin"
-application_url = "https://pit-statement-kissing-fotos.trycloudflare.com/"
+application_url = "https://btcpayshopifyplugin.vercel.app/"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://pit-statement-kissing-fotos.trycloudflare.com/auth/callback",
-  "https://pit-statement-kissing-fotos.trycloudflare.com/auth/shopify/callback",
-  "https://pit-statement-kissing-fotos.trycloudflare.com/api/auth/callback"
+  "https://btcpayshopifyplugin.vercel.app/auth/callback",
+  "https://btcpayshopifyplugin.vercel.app/auth/shopify/callback",
+  "https://btcpayshopifyplugin.vercel.app/api/auth/callback"
 ]
 
 [webhooks]

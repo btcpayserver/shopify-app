@@ -28,7 +28,7 @@ function Extension() {
   const { currencyCode, amount } = useTotalAmount();
   const instructions = useInstructions();
 
-  const shopifyApplicaitonUrl = 'https://pit-statement-kissing-fotos.trycloudflare.com';
+  const shopifyApplicaitonUrl = 'https://btcpayshopifyplugin.vercel.app';
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [btcPayUrl, setBtcPayUrl] = useState(null);
@@ -39,6 +39,7 @@ function Extension() {
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
 
   useEffect(() => {
+    console.log("Lets do this");
     validateToken();
   }, [shopName, checkoutToken]);
 
@@ -48,6 +49,7 @@ function Extension() {
       if (!storeData.btcpayUrl || !storeData.btcpayStoreId) {
         setError('Failed to retrieve BTCPay URL or Store ID');
       }
+      console.log("Things");
       setBtcPayStoreId(storeData.btcpayStoreId);
       setBtcPayUrl(storeData.btcpayUrl);
       await setCheckTokenValidity(storeData.btcpayUrl, storeData.btcpayStoreId, shopName);
