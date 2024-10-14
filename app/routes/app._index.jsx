@@ -36,7 +36,7 @@ export const action = async ({ request }) => {
     if (!btcpayUrl || !btcpayStoreId) {
       return json({ success: false, message: `Please input your BTCPay server domain url and store Id` }, { status: 400 });
     }
-    btcpayUrl = btcpayUrl.endsWith('/') ? btcpayUrl.slice(0, -1) : btcpayUrl;
+    //btcpayUrl = btcpayUrl.endsWith('/') ? btcpayUrl.slice(0, -1) : btcpayUrl;
     const isValidBTCPayStore = await validateBTCPayStoreInstance(btcpayUrl, btcpayStoreId, shopId);
     if (!isValidBTCPayStore) {
       return json({ success: false, message: 'Failed to validate BTCPay store. Kindly ensure you have the plugin installed on your BTCPay Server instance.' }, { status: 400 });
@@ -145,7 +145,7 @@ export default function Index() {
             <fetcher.Form method="POST">
             <BlockStack gap="400">
               <TextField
-                label="BTCPay URL"
+                label="BTCPay URL (without trailing slash)"
                 name="btcpayUrl"
                 value={formState?.btcpayUrl}
                 onChange={(v) =>
