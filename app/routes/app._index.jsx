@@ -37,7 +37,7 @@ export const action = async ({ request }) => {
       return json({ success: false, message: `Please input your BTCPay server domain url and store Id` }, { status: 400 });
     }
     btcpayUrl = btcpayUrl.endsWith('/') ? btcpayUrl.slice(0, -1) : btcpayUrl;
-    const isValidBTCPayStore = await validateBTCPayStoreInstance(btcpayUrl, btcpayStoreId, "17404a-7d"); // Replace last parameter with shopId
+    const isValidBTCPayStore = await validateBTCPayStoreInstance(btcpayUrl, btcpayStoreId, shopId);
     if (!isValidBTCPayStore) {
       return json({ success: false, message: 'Failed to validate BTCPay store. Kindly ensure you have the plugin installed on your BTCPay Server instance.' }, { status: 400 });
     }
