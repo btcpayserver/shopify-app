@@ -36,6 +36,7 @@ export const action = async ({ request }) => {
     if (!btcpayUrl || !btcpayStoreId) {
       return json({ success: false, message: `Please input your BTCPay server domain url and store Id` }, { status: 400 });
     }
+    btcpayUrl = btcpayUrl.endsWith('/') ? btcpayUrl.slice(0, -1) : btcpayUrl;
     const isValidBTCPayStore = await validateBTCPayStoreInstance(btcpayUrl, btcpayStoreId, "17404a-7d"); // Replace last parameter with shopId
     if (!isValidBTCPayStore) {
       return json({ success: false, message: 'Failed to validate BTCPay store. Kindly ensure you have the plugin installed on your BTCPay Server instance.' }, { status: 400 });
@@ -104,8 +105,14 @@ export default function Index() {
   const settings = useLoaderData();
   const [formState, setFormState] = useState(settings);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false); 
 
   useEffect(() => { 
+    if (fetcher.state === "submitting") {
+      setLoading(true);
+    } else if (fetcher.state === "idle") {
+      setLoading(false); 
+    }
     if (fetcher.data?.success === false) {
       shopify.toast.show(fetcher.data.message || "Error saving BTCPay URL");
       setErrorMessage(fetcher.data.message);
@@ -153,7 +160,9 @@ export default function Index() {
                   setFormState({ ...formState, btcpayStoreId: v })
                 }
               />
-              <Button submit={true}>Save</Button>
+              <Button submit={true} loading={loading}>
+                  {loading ? "Saving..." : "Save"}
+                </Button>
             </BlockStack>
             </fetcher.Form>
           </Card>
