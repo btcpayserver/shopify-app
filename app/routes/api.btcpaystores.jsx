@@ -6,6 +6,8 @@ export async function loader({ request }) {
     const url = new URL(request.url);
     const shopName = url.searchParams.get("shopName");
 
+    console.log(request.method)
+    console.log(request);
     if (request.method === "OPTIONS") {
         const response = json({
         status: 200,
@@ -32,9 +34,11 @@ export async function loader({ request }) {
         });
     }
 
-    return json({
+    const response = json({
         ok: true,
         message: `Record found for shop: ${shopName}`,
         data: btcpayServerRecord
     });
+
+    return cors(request, response);
 }
