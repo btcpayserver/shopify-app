@@ -29,6 +29,7 @@ function Extension() {
   const instructions = useInstructions();
 
   const shopifyApplicaitonUrl = 'https://btcpayshopifyplugin.vercel.app';
+  console.log("Omooooo//.. putting a log here");
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [btcPayUrl, setBtcPayUrl] = useState(null);
