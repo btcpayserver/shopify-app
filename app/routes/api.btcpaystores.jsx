@@ -1,23 +1,16 @@
 import { json } from '@remix-run/node';
+import { cors } from 'remix-utils/cors'
 import db from '../db.server';
 
 export async function loader({ request }) {
     const url = new URL(request.url);
     const shopName = url.searchParams.get("shopName");
 
-    const corsHeaders = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Credentials": "true"
-    };
-
-    // Handle OPTIONS preflight request
     if (request.method === "OPTIONS") {
-        return new Response(null, {
-            status: 204, // No content for preflight requests
-            headers: corsHeaders,
+        const response = json({
+        status: 200,
         });
+        return await cors(request, response);
     }
 
     if (!shopName) {
