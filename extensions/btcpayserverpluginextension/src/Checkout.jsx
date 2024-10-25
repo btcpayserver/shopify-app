@@ -13,7 +13,6 @@ import {
   useInstructions,
   useTranslate,
 } from "@shopify/ui-extensions-react/checkout";
-
 import { useEffect, useState } from 'react';
 
 // 1. Choose an extension target
@@ -29,7 +28,6 @@ function Extension() {
   const instructions = useInstructions();
 
   const shopifyApplicaitonUrl = 'https://btcpayshopifyplugin.vercel.app';
-  console.log("Omooooo//.. putting a log here");
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [btcPayUrl, setBtcPayUrl] = useState(null);
@@ -42,7 +40,7 @@ function Extension() {
   useEffect(() => {
     const timer = setTimeout(() => {
         validateToken();
-    }, 2000);
+    }, 3000);
     return () => clearTimeout(timer);
   }, [shopName, checkoutToken]);
 
@@ -50,7 +48,7 @@ function Extension() {
     try {
       const storeData = await retrieveBTCPayUrl(shopName);
       if (!storeData.btcpayUrl || !storeData.btcpayStoreId) {
-        setError('Failed to retrieve BTCPay URL or Store ID');
+        setError('Failed to retrieve BTCPay URL or Store ID'); 
       }
       console.log("Things");
       setBtcPayStoreId(storeData.btcpayStoreId);

@@ -1,19 +1,10 @@
-import { useEffect, useState } from "react";
-import { json } from "@remix-run/node";
-import { useFetcher, Form, useLoaderData } from "@remix-run/react";
-import {
-  Page,
-  Text,
-  Card,
-  Button,
-  BlockStack,
-  InlineGrid,
-  TextField,
-  Box,
-} from "@shopify/polaris";
 import db from "../db.server";
-import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
+import { json } from "@remix-run/node";
+import { useEffect, useState } from "react";
 import { authenticate } from "../shopify.server";
+import { useFetcher, useLoaderData } from "@remix-run/react";
+import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
+import { Page, Text, Card, Button, BlockStack, InlineGrid, TextField, Box } from "@shopify/polaris";
 
 export async function loader({ request }) {
   await authenticate.admin(request);
@@ -32,11 +23,11 @@ export const action = async ({ request }) => {
     const shop = url.searchParams.get('shop');
     const shopId = shop.split('.myshopify.com')[0];
     const formData = Object.fromEntries(await request.formData());
-    const { btcpayUrl, btcpayStoreId } = formData;
+    let { btcpayUrl, btcpayStoreId } = formData;
     if (!btcpayUrl || !btcpayStoreId) {
       return json({ success: false, message: `Please input your BTCPay server domain url and store Id` }, { status: 400 });
     }
-    //btcpayUrl = btcpayUrl.endsWith('/') ? btcpayUrl.slice(0, -1) : btcpayUrl;
+    btcpayUrl = btcpayUrl.endsWith('/') ? btcpayUrl.slice(0, -1) : btcpayUrl;
     const isValidBTCPayStore = await validateBTCPayStoreInstance(btcpayUrl, btcpayStoreId, shopId);
     if (!isValidBTCPayStore) {
       return json({ success: false, message: 'Failed to validate BTCPay store. Kindly ensure you have the plugin installed on your BTCPay Server instance.' }, { status: 400 });
@@ -66,7 +57,6 @@ export const action = async ({ request }) => {
     return json({ success: false, message: `Error: ${error.message}` }, { status: 500 });
   }
 };
-
 
 const getShopInfo = async (shopDomain) => {
   let session = await findSessionByShop(shopDomain);
@@ -105,14 +95,8 @@ export default function Index() {
   const settings = useLoaderData();
   const [formState, setFormState] = useState(settings);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false); 
 
   useEffect(() => { 
-    if (fetcher.state === "submitting") {
-      setLoading(true);
-    } else if (fetcher.state === "idle") {
-      setLoading(false); 
-    }
     if (fetcher.data?.success === false) {
       shopify.toast.show(fetcher.data.message || "Error saving BTCPay URL");
       setErrorMessage(fetcher.data.message);
@@ -137,7 +121,7 @@ export default function Index() {
                 BTCPay Server
               </Text>
               <Text as="p" variant="bodyMd">
-                Please enter your BTCPay server details
+                Please enter your BTCPay server Url and the Store ID (where the plugin is installed)
               </Text>
             </BlockStack>
           </Box>
@@ -145,7 +129,7 @@ export default function Index() {
             <fetcher.Form method="POST">
             <BlockStack gap="400">
               <TextField
-                label="BTCPay URL (without trailing slash)"
+                label="BTCPay URL"
                 name="btcpayUrl"
                 value={formState?.btcpayUrl}
                 onChange={(v) =>
@@ -160,12 +144,17 @@ export default function Index() {
                   setFormState({ ...formState, btcpayStoreId: v })
                 }
               />
-              <Button submit={true} loading={loading}>
-                  {loading ? "Saving..." : "Save"}
-                </Button>
+              <Button
+              submit
+              primary
+              loading={fetcher.state === "submitting"}
+              disabled={fetcher.state === "submitting"}
+              >
+                Save
+              </Button>
             </BlockStack>
             </fetcher.Form>
-          </Card>
+          </Card> 
         </InlineGrid>
       </BlockStack>  
     </Page>
