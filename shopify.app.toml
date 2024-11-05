@@ -7,7 +7,7 @@ application_url = "https://btcpayshopifyplugin.vercel.app/"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = true
+automatically_update_urls_on_dev = false
 dev_store_url = "quickstart-4c9539b2.myshopify.com"
 include_config_on_deploy = true
 
