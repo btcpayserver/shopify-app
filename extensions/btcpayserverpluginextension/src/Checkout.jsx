@@ -13,7 +13,7 @@ import {
   useInstructions,
   useTranslate,
 } from "@shopify/ui-extensions-react/checkout";
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 // 1. Choose an extension target
 export default reactExtension(
@@ -36,25 +36,15 @@ function Extension() {
   const [modalContent, setModalContent] = useState(null); 
   const [isTokenValid, setIsTokenValid] = useState(false);
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
-  const timeoutRef = useRef(null);
-
 
   useEffect(() => {
-    timeoutRef.current = setTimeout(async () => {
+    const timer = setTimeout(async () => {
       await validateToken();
     }, 5000);
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      clearTimeout(timer);
     };
   }, []);
-
-  const retryFetch = () => {
-    timeoutRef.current = setTimeout(async () => {
-      await validateToken();
-    }, 3000);
-  };
 
   const validateToken = async () => {
     try {
@@ -79,11 +69,14 @@ function Extension() {
         setOrderId(validationResponse.data.orderId);
       } else {
         setIsTokenValid(false);
-        await retryFetch();
+        await validateToken();
+        // setTimeout(async () => {
+        //   await validateToken();
+        // }, 2000);
       }
     } catch (error) {
       setIsTokenValid(false);
-      await retryFetch();
+      await validateToken();
     }
   }; 
 
