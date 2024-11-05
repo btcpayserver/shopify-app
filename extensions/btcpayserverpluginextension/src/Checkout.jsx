@@ -41,12 +41,11 @@ function Extension() {
   useEffect(() => {
     const timer = setTimeout(async () => {
       await validateToken();
-    }, 6000);
-    
+    }, 5000);
     return () => {
       clearTimeout(timer);
     };
-}, []);
+  }, []);
 
   const validateToken = async () => {
     try {
@@ -54,7 +53,6 @@ function Extension() {
       if (!storeData.btcpayUrl || !storeData.btcpayStoreId) {
         setError('Failed to retrieve BTCPay URL or Store ID'); 
       }
-      console.log("Things");
       setBtcPayStoreId(storeData.btcpayStoreId);
       setBtcPayUrl(storeData.btcpayUrl);
       await setCheckTokenValidity(storeData.btcpayUrl, storeData.btcpayStoreId, shopName);
@@ -72,6 +70,12 @@ function Extension() {
         setOrderId(validationResponse.data.orderId);
       } else {
         setIsTokenValid(false);
+        const timer = setTimeout(async () => {
+          await validateToken();
+        }, 3000);
+        return () => {
+          clearTimeout(timer);
+        };
       }
     } catch (error) {
       setIsTokenValid(false);
