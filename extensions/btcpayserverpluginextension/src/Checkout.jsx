@@ -40,7 +40,7 @@ function Extension() {
   useEffect(() => {
     const timer = setTimeout(async () => {
       await validateToken();
-    }, 1000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [shopName, checkoutToken]);
 
