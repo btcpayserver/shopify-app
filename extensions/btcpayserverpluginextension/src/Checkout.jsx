@@ -37,13 +37,22 @@ function Extension() {
   const [isTokenValid, setIsTokenValid] = useState(false);
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
 
+
   useEffect(() => {
+    console.log('useEffect triggered');
+    console.log('shopName:', shopName);
+    console.log('checkoutToken:', checkoutToken);
+    
     const timer = setTimeout(async () => {
-      console.log("Loaded...")
+      console.log("Loaded...");
       await validateToken();
-    }, 10000);
-    return () => clearTimeout(timer);
-  }, [shopName, checkoutToken]);
+    }, 5000);
+    
+    return () => {
+      console.log('Timer cleared');
+      clearTimeout(timer);
+    };
+}, [shopName, checkoutToken]);
 
   const validateToken = async () => {
     try {
