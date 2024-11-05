@@ -41,7 +41,7 @@ function Extension() {
     const timer = setTimeout(async () => {
       console.log("Loaded...")
       await validateToken();
-    }, 5000);
+    }, 7000);
     return () => clearTimeout(timer);
   }, [shopName, checkoutToken]);
 
