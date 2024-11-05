@@ -38,10 +38,10 @@ function Extension() {
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
 
   useEffect(() => {
-    console.log("Loaded...")
     const timer = setTimeout(async () => {
+      console.log("Loaded...")
       await validateToken();
-    }, 2000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [shopName, checkoutToken]);
 
