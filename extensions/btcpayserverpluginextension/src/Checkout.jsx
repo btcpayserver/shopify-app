@@ -39,17 +39,11 @@ function Extension() {
 
 
   useEffect(() => {
-    console.log('useEffect triggered');
-    console.log('shopName:', shopName);
-    console.log('checkoutToken:', checkoutToken);
-    
     const timer = setTimeout(async () => {
-      console.log("Loaded...");
       await validateToken();
-    }, 5000);
+    }, 6000);
     
     return () => {
-      console.log('Timer cleared');
       clearTimeout(timer);
     };
 }, []);
