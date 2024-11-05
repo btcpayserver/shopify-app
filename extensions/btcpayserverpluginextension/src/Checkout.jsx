@@ -12,6 +12,7 @@ import {
   useTotalAmount,
   useInstructions,
   useTranslate,
+  useAvailablePaymentOptions
 } from "@shopify/ui-extensions-react/checkout";
 import { useEffect, useState } from 'react';
 
@@ -36,15 +37,17 @@ function Extension() {
   const [modalContent, setModalContent] = useState(null); 
   const [isTokenValid, setIsTokenValid] = useState(false);
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
+  const options = useAvailablePaymentOptions();
 
   useEffect(() => {
+    console.log('Available payment options:', options);
     const timer = setTimeout(async () => {
       await validateToken();
     }, 5000);
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [options]);
 
   const validateToken = async () => {
     try {
@@ -144,7 +147,7 @@ function Extension() {
         setError(`Failed to create order: ${createOrderResponse.statusText}`);
       }
       const orderData = await createOrderResponse.json();
-      console.log('Order created successfully:', orderData);
+      console.log('Order created successfully');
       setModalContent(orderData); 
     } catch (error) {
       setError(`Failed to load BTC Pay content: ${error.message}`);
@@ -170,8 +173,8 @@ function Extension() {
       {isTokenValid && (
         <BlockStack>
           <Text>Shop name: {shop.name}</Text>
-          <Text size="large" alignment="center" bold>Review and pay!</Text>
-          <Text>Please review your order and complete the payment.</Text>
+          <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
+          <Text>Please review your order and complete the payment using BTCPay Server.</Text>
           <Button onPress={async () => {
               await CreateBTCPayOrder();
               ui.overlay.open('btc-pay-modal');
