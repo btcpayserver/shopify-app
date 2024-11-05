@@ -38,6 +38,7 @@ function Extension() {
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
 
   useEffect(() => {
+    console.log("Loaded...")
     const timer = setTimeout(async () => {
       await validateToken();
     }, 2000);
