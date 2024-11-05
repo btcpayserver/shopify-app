@@ -29,7 +29,6 @@ function Extension() {
 
   const shopifyApplicaitonUrl = 'https://btcpayshopifyplugin.vercel.app';
   const [loading, setLoading] = useState(false);
-  const [isValidating, setIsValidating] = useState(true);
   const [orderId, setOrderId] = useState(null);
   const [btcPayUrl, setBtcPayUrl] = useState(null);
   const [btcPayStoreId, setBtcPayStoreId] = useState(null);
@@ -37,33 +36,24 @@ function Extension() {
   const [modalContent, setModalContent] = useState(null); 
   const [isTokenValid, setIsTokenValid] = useState(false);
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
-  
+
   useEffect(() => {
-    const interval = setInterval(async () => {
+    const timer = setTimeout(async () => {
       await validateToken();
     }, 2000);
     return () => clearTimeout(timer);
   }, [shopName, checkoutToken]);
-
 
   const validateToken = async () => {
     try {
       const storeData = await retrieveBTCPayUrl(shopName);
       if (!storeData.btcpayUrl || !storeData.btcpayStoreId) {
         setError('Failed to retrieve BTCPay URL or Store ID'); 
-        setIsTokenValid(false);
       }
+      console.log("Things");
       setBtcPayStoreId(storeData.btcpayStoreId);
       setBtcPayUrl(storeData.btcpayUrl);
-      const validationResponse = await validateCheckoutToken(storeData.btcpayUrl, storeData.btcpayStoreId, shopName, checkoutToken.current);
-      if (validationResponse.success) {
-        setIsTokenValid(true);
-        setOrderId(validationResponse.data.orderId);
-        setIsValidating(false);
-        clearInterval(interval);
-      } else {
-        setIsTokenValid(false);
-      }
+      await setCheckTokenValidity(storeData.btcpayUrl, storeData.btcpayStoreId, shopName);
     } catch (error) {
       setError(`Failed to validate token: ${error.message}`);
       setIsTokenValid(false);
@@ -165,9 +155,7 @@ function Extension() {
   // 3. Render a UI
   return (
     <>
-      {isValidating ? (
-        <Spinner size="large" />
-      ) : isTokenValid ? (
+      {isTokenValid && (
         <BlockStack>
           <Text>Shop name: {shop.name}</Text>
           <Text size="large" alignment="center" bold>Review and pay!</Text>
@@ -198,8 +186,6 @@ function Extension() {
               </Modal>
             }>Complete Payment</Button>
         </BlockStack>
-      ) : (
-        <TextBlock>{error ? error : 'Token validation failed.'}</TextBlock>
       )}
     </>
   );
