@@ -12,7 +12,7 @@ import {
   useTotalAmount,
   useInstructions,
   useTranslate,
-  useAvailablePaymentOptions
+  useSelectedPaymentOptions
 } from "@shopify/ui-extensions-react/checkout";
 import { useEffect, useState } from 'react';
 
@@ -37,7 +37,7 @@ function Extension() {
   const [modalContent, setModalContent] = useState(null); 
   const [isTokenValid, setIsTokenValid] = useState(false);
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
-  const options = useAvailablePaymentOptions();
+  const options = useSelectedPaymentOptions();
 
   useEffect(() => {
     console.log('Available payment options:', options);
