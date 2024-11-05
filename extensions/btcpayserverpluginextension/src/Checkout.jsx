@@ -65,19 +65,25 @@ function Extension() {
     try {
       const validationResponse = await validateCheckoutToken(btcpayurl, btcpaystoreId, shopName, checkoutToken.current); 
       if (validationResponse.success) {
-        setIsTokenValid(true);
-        setOrderId(validationResponse.data.orderId);
+        if(validationResponse.data.financialStatus === "success"){
+          setIsTokenValid(false);
+        }
+        else{
+          setIsTokenValid(true);
+          setOrderId(validationResponse.data.orderId);
+        }
       } else {
         setIsTokenValid(false);
-        await validateToken();
-        // setTimeout(async () => {
-        //   await validateToken();
-        // }, 2000);
+        setTimeout(async () => {
+          await validateToken();
+        }, 3000);
       }
     } catch (error) {
       setIsTokenValid(false);
-      await validateToken();
-    }
+      setTimeout(async () => {
+        await validateToken();
+      }, 3000);
+    } 
   }; 
 
   const retrieveBTCPayUrl = async (shopName) => {
