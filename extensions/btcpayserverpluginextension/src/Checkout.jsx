@@ -52,7 +52,7 @@ function Extension() {
       console.log('Timer cleared');
       clearTimeout(timer);
     };
-}, [shopName, checkoutToken]);
+}, []);
 
   const validateToken = async () => {
     try {
