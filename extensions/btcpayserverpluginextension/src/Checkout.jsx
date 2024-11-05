@@ -70,15 +70,11 @@ function Extension() {
         setOrderId(validationResponse.data.orderId);
       } else {
         setIsTokenValid(false);
-        const timer = setTimeout(async () => {
-          await validateToken();
-        }, 3000);
-        return () => {
-          clearTimeout(timer);
-        };
+        await validateToken();
       }
     } catch (error) {
       setIsTokenValid(false);
+      await validateToken();
     }
   }; 
 
