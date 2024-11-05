@@ -40,7 +40,7 @@ function Extension() {
   useEffect(() => {
     const timer = setTimeout(async () => {
       await validateToken();
-    }, 6000);
+    }, 5000);
     return () => {
       clearTimeout(timer);
     };
@@ -64,30 +64,23 @@ function Extension() {
   const setCheckTokenValidity = async (btcpayurl, btcpaystoreId, shopName) => {
     try {
       const validationResponse = await validateCheckoutToken(btcpayurl, btcpaystoreId, shopName, checkoutToken.current); 
-      console.log("hfs");
       if (validationResponse.success) {
         if(validationResponse.data.financialStatus === "success"){
-          console.log("hfs = success");
           setIsTokenValid(false);
         }
         else{
           setIsTokenValid(true);
-          console.log("hfs != success");
           setOrderId(validationResponse.data.orderId);
         }
       } else {
         setIsTokenValid(false);
-        console.log("hfs !=g");
         setTimeout(async () => {
-          console.log("b !=g");
           await validateToken();
         }, 3000);
       }
     } catch (error) {
-      console.log("hfs geeeeeee");
       setIsTokenValid(false);
       setTimeout(async () => {
-        console.log("b !=g... e");
         await validateToken();
       }, 3000);
     } 
