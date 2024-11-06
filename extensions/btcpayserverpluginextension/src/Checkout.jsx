@@ -40,13 +40,16 @@ function Extension() {
   const options = useSelectedPaymentOptions();
 
   useEffect(() => {
-    console.log('Available payment options:', options);
-    const timer = setTimeout(async () => {
-      await validateToken();
-    }, 5000);
-    return () => {
-      clearTimeout(timer);
-    };
+    const hasManualPaymentOption = options.some((option) => option.type.toLowerCase() === 'manualpayment');
+    if (hasManualPaymentOption) {
+      const timer = setTimeout(async () => {
+        await validateToken();
+      }, 5000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+    
   }, [options]);
 
   const validateToken = async () => {
