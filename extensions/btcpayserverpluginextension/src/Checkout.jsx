@@ -173,6 +173,8 @@ function Extension() {
   // 3. Render a UI
   return (
     <>
+    <Text>Shop name: {shop.name}</Text>
+    <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
     {error && (
       <Banner status="critical">
         <Text>{error}</Text>
@@ -180,8 +182,6 @@ function Extension() {
     )}
       {isTokenValid && (
         <BlockStack>
-          <Text>Shop name: {shop.name}</Text>
-          <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
           <Text>Please review your order and complete the payment using BTCPay Server.</Text>
           <Button onPress={async () => {
               await CreateBTCPayOrder();
