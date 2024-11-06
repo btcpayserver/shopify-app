@@ -173,6 +173,11 @@ function Extension() {
   // 3. Render a UI
   return (
     <>
+    {error && (
+      <Banner status="critical">
+        <Text>{error}</Text>
+      </Banner>
+    )}
       {isTokenValid && (
         <BlockStack>
           <Text>Shop name: {shop.name}</Text>
