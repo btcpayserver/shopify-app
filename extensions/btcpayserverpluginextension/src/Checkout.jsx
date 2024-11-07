@@ -191,7 +191,7 @@ function Extension() {
               <Modal 
                 id="btc-pay-modal" 
                 padding 
-                title="Pay with BTCPay Server"
+                title="Pay with Bitcoin/Lightning Network"
                 onClose={async () => {
                   await setCheckTokenValidity(btcPayUrl, btcPayStoreId, shopName);
                 }}>
