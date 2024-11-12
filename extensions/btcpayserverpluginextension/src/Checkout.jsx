@@ -36,6 +36,7 @@ function Extension() {
   const [error, setError] = useState(null);
   const [modalContent, setModalContent] = useState(null); 
   const [isTokenValid, setIsTokenValid] = useState(false);
+  const [modalTitle, setModalTitle] = useState('Pay with Bitcoin/Lightning Network');
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
   const options = useSelectedPaymentOptions();
 
@@ -77,6 +78,7 @@ function Extension() {
         else{
           setIsTokenValid(true);
           setOrderId(validationResponse.data.orderId);
+          setModalTitle(validationResponse.data.paymentMethodDescription);
         }
       } else {
         setIsTokenValid(false);
@@ -191,7 +193,7 @@ function Extension() {
               <Modal 
                 id="btc-pay-modal" 
                 padding 
-                title="Pay with Bitcoin/Lightning Network"
+                title={modalTitle}
                 onClose={async () => {
                   await setCheckTokenValidity(btcPayUrl, btcPayStoreId, shopName);
                 }}>
