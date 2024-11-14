@@ -180,7 +180,7 @@ function Extension() {
         <Text>{error}</Text>
       </Banner>
     )}
-      {isTokenValid && (
+      {isTokenValid ? (
         <BlockStack>
           <Text>Shop name: {shop.name}</Text>
           <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
@@ -210,6 +210,13 @@ function Extension() {
                 )}
               </Modal>
             }>Complete Payment</Button>
+        </BlockStack>
+      ) : (
+        <BlockStack>
+          <Text>Shop name: {shop.name}</Text>
+          <Text>Kindly ignore if the payment method selected was not payment with BTCPay Server</Text>
+          <Spinner />
+          <Text>Validating your payment options...</Text>
         </BlockStack>
       )}
     </>
