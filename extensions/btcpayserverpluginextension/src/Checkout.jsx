@@ -36,6 +36,7 @@ function Extension() {
   const [error, setError] = useState(null);
   const [modalContent, setModalContent] = useState(null); 
   const [isTokenValid, setIsTokenValid] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
   const [retryCount, setRetryCount] = useState(0); 
   const [modalTitle, setModalTitle] = useState('Pay with Bitcoin/Lightning Network');
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
@@ -74,6 +75,7 @@ function Extension() {
       if (validationResponse.success) {
         if(validationResponse.data.financialStatus === "success"){
           setIsTokenValid(false);
+          setIsPaid(true); 
         }
         else{
           setIsTokenValid(true);
@@ -218,6 +220,11 @@ function Extension() {
                 )}
               </Modal>
             }>Complete Payment</Button>
+        </BlockStack>
+      ) : isPaid ? (
+        <BlockStack>
+          <Text>Shop name: {shop.name}</Text>
+          <Text size="large" alignment="center" bold>Thank you! Your payment was acknowledged.</Text>
         </BlockStack>
       ) : (
         <BlockStack>
