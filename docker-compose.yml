@@ -9,19 +9,11 @@ services:
     env_file: .env
     environment:
       - PORT=3000
-      - DOMAIN=${DOMAIN} # Domain from .env
+      - DOMAIN=${DOMAIN}
+      - DATABASE_FILE=file:/app/database.sqlite
     volumes:
       - .:/app
-    depends_on:
-      - db
-    networks:
-      - web
-
-  db:
-    image: sqlite3
-    container_name: sqlite-db
-    volumes:
-      - db_data:/data
+      - ./database.sqlite:/app/database.sqlite
     networks:
       - web
 
@@ -35,6 +27,8 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx:/etc/nginx/conf.d
       - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
     environment:
       - DEFAULT_HOST=${DOMAIN}
     networks:
@@ -46,6 +40,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
     depends_on:
@@ -54,8 +50,8 @@ services:
       - web
 
 volumes:
-  db_data:
   nginx_certs:
+  nginx_vhost:
 
 networks:
   web:
