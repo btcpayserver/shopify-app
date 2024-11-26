@@ -9,8 +9,8 @@ generator client {
 // enough when changing adapters.
 // See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_FILE")
 }
 
 model Session {
@@ -32,11 +32,11 @@ model Session {
 }
 
 model BTCPayServerStore {
-  id            Int      @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   btcpayUrl     String
   shopName      String?
-  shop          String   @unique 
-  btcpayStoreId  String
+  shop          String  @unique
+  btcpayStoreId String
   shopId        String?
   shopOwner     String?
   currency      String?
