@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shopify-app
+    env_file: .env
+    environment:
+      - PORT=3000
+      - DOMAIN=${DOMAIN} # Domain from .env
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - web
+
+  db:
+    image: sqlite3
+    container_name: sqlite-db
+    volumes:
+      - db_data:/data
+    networks:
+      - web
+
+  nginx:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx:/etc/nginx/conf.d
+      - nginx_certs:/etc/nginx/certs
+    environment:
+      - DEFAULT_HOST=${DOMAIN}
+    networks:
+      - web
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    depends_on:
+      - nginx
+    networks:
+      - web
+
+volumes:
+  db_data:
+  nginx_certs:
+
+networks:
+  web:
+    driver: bridge
