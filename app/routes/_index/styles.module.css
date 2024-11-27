@@ -1,73 +1,131 @@
+/* Main container for the landing page */
 .index {
   align-items: center;
   display: flex;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem;
+  background-color: #f9fafb; /* Soft neutral background */
 }
 
-.heading,
-.text {
-  padding: 0;
-  margin: 0;
+/* Headings */
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50; /* Dark, modern text color */
+  margin-bottom: 1rem;
 }
 
 .text {
   font-size: 1.2rem;
-  padding-bottom: 2rem;
+  color: #7f8c8d; /* Subtle gray for supporting text */
+  line-height: 1.6;
+  margin-bottom: 2rem;
 }
 
+/* Main content container */
 .content {
-  display: grid;
-  gap: 2rem;
-}
-
-.form {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin: 0 auto;
-  gap: 1rem;
+  max-width: 800px;
+  padding: 2rem;
+  background-color: #ffffff; /* Clean white card background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.label {
-  display: grid;
-  gap: 0.2rem;
-  max-width: 20rem;
-  text-align: left;
-  font-size: 1rem;
-}
-
-.input {
-  padding: 0.4rem;
-}
-
-.button {
-  padding: 0.4rem;
-}
-
+/* Unordered list for feature highlights */
 .list {
   list-style: none;
   padding: 0;
-  padding-top: 3rem;
-  margin: 0;
-  display: flex;
-  gap: 2rem;
-}
-
-.list > li {
-  max-width: 20rem;
+  margin: 2rem 0;
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
   text-align: left;
 }
 
-@media only screen and (max-width: 50rem) {
-  .list {
-    display: block;
+.list > li {
+  font-size: 1rem;
+  color: #34495e; /* Slightly darker gray for readability */
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+}
+
+.list > li::before {
+  content: "✔";
+  color: #27ae60; /* Green checkmark for positivity */
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Links section for documentation */
+.docs {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.docs a {
+  text-decoration: none;
+  color: #3498db; /* Shopify-inspired blue for links */
+  font-weight: 500;
+  margin: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.docs a:hover {
+  color: #2c3e50; /* Darker on hover */
+  text-decoration: underline;
+}
+
+/* Call-to-action button */
+.button {
+  display: inline-block;
+  background-color: #5cb85c; /* Shopify green */
+  color: #ffffff;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
+}
+
+.button:hover {
+  background-color: #4cae4c; /* Slightly darker green on hover */
+}
+
+/* Responsive design for smaller screens */
+@media only screen and (max-width: 768px) {
+  .content {
+    padding: 1.5rem;
   }
 
-  .list > li {
-    padding-bottom: 1rem;
+  .heading {
+    font-size: 2rem;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+
+  .list {
+    gap: 1rem;
+  }
+
+  .button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
