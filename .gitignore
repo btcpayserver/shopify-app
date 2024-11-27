@@ -9,9 +9,10 @@ node_modules
 /prisma/dev.sqlite
 /prisma/dev.sqlite-journal
 database.sqlite
-
+database.sqlite-journal
 .env
 .env.*
+!.env.example
 
 
 
