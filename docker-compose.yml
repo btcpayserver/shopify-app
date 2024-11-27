@@ -1,23 +1,25 @@
 version: '3.8'
 
 services:
-  app:
+  shopify-app:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: shopify-app
-    env_file: .env
     environment:
-      - PORT=3000
+      - VIRTUAL_HOST=${DOMAIN}
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - NODE_ENV=production
+      - SHOPIFY_API_KEY=${SHOPIFY_API_KEY}
+      - SHOPIFY_API_SECRET=${SHOPIFY_API_SECRET}
+      - SCOPES=${SCOPES}
+      - HOST=0.0.0.0
       - DOMAIN=${DOMAIN}
-      - DATABASE_FILE=file:/app/database.sqlite
+    container_name: shopify-app
     volumes:
-      - .:/app
-      - ./database.sqlite:/app/database.sqlite
-    networks:
-      - web
+      - ./data:/app/data
+    restart: always
 
-  nginx:
+  nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     ports:
@@ -25,34 +27,31 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./nginx:/etc/nginx/conf.d
-      - nginx_certs:/etc/nginx/certs
-      - nginx_vhost:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/vhost:/etc/nginx/vhost.d
+      - ./nginx/html:/usr/share/nginx/html
     environment:
       - DEFAULT_HOST=${DOMAIN}
-    networks:
-      - web
+    restart: always
+    labels:
+      - "com.github.nginx-proxy.docker-gen"
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - nginx-proxy
     container_name: letsencrypt
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - nginx_certs:/etc/nginx/certs
-      - nginx_vhost:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
+      - ./nginx/certs:/etc/nginx/certs
+      - ./acme.sh:/etc/acme.sh
+      - ./nginx/html:/usr/share/nginx/html
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
-    depends_on:
-      - nginx
-    networks:
-      - web
+      - NGINX_DOCKER_GEN_CONTAINER=nginx-proxy
+    restart: always
 
 volumes:
-  nginx_certs:
-  nginx_vhost:
-
-networks:
-  web:
-    driver: bridge
+  data:
+  acme.sh:
+  html:
