@@ -23,7 +23,7 @@ export default reactExtension(
 );
 
 function Extension() {
-  const translate = useTranslate(); 
+  const translate = useTranslate();
   const { shop, ui, checkoutToken } = useApi();
   const { currencyCode, amount } = useTotalAmount();
   const instructions = useInstructions();
@@ -33,10 +33,10 @@ function Extension() {
   const [btcPayUrl, setBtcPayUrl] = useState(null);
   const [btcPayStoreId, setBtcPayStoreId] = useState(null);
   const [error, setError] = useState(null);
-  const [modalContent, setModalContent] = useState(null); 
+  const [modalContent, setModalContent] = useState(null);
   const [isTokenValid, setIsTokenValid] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
-  const [retryCount, setRetryCount] = useState(0); 
+  const [retryCount, setRetryCount] = useState(0);
   const [modalTitle, setModalTitle] = useState('Pay with Bitcoin/Lightning Network');
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
   const options = useSelectedPaymentOptions();
@@ -57,7 +57,7 @@ function Extension() {
     try {
       const storeData = await retrieveBTCPayUrl(shopName);
       if (!storeData.btcpayUrl || !storeData.btcpayStoreId) {
-        setError('Failed to retrieve BTCPay URL or Store ID'); 
+        setError('Failed to retrieve BTCPay URL or Store ID');
       }
       setBtcPayStoreId(storeData.btcpayStoreId);
       setBtcPayUrl(storeData.btcpayUrl);
@@ -76,30 +76,30 @@ function Extension() {
       const data = await response.json();
       const { btcpayUrl, btcpayStoreId } = data.data;
       return { btcpayUrl, btcpayStoreId };
-    } 
-  }; 
+    }
+  };
 
   const setCheckTokenValidity = async (btcpayurl, btcpaystoreId, shopName) => {
     try {
-      const validationResponse = await validateCheckoutToken(btcpayurl, btcpaystoreId, shopName, checkoutToken.current); 
+      const validationResponse = await validateCheckoutToken(btcpayurl, btcpaystoreId, shopName, checkoutToken.current);
       if (validationResponse.success) {
         if(validationResponse.data.financialStatus === "success"){
           setIsTokenValid(false);
-          setIsPaid(true); 
+          setIsPaid(true);
         }
         else{
           setIsTokenValid(true);
           setOrderId(validationResponse.data.orderId);
           setModalTitle(validationResponse.data.paymentMethodDescription);
-          setRetryCount(0); 
+          setRetryCount(0);
         }
       } else {
         retryTokenValidation();
       }
     } catch (error) {
       retryTokenValidation();
-    } 
-  }; 
+    }
+  };
 
   const retryTokenValidation = () => {
     if (retryCount >= 3) {
@@ -113,12 +113,12 @@ function Extension() {
       }, 3000);
     }
   };
-  
+
   const validateCheckoutToken = async (btcpayUrl, btcpayStoreId, shopName, token) => {
     try {
       const response = await fetch(`${btcpayUrl}/stores/${btcpayStoreId}/plugins/shopify/order/${shopName}/${token}`, {
         method: 'GET',
-        headers: {'Content-Type': 'application/json'}  
+        headers: {'Content-Type': 'application/json'}
       });
       if (response.ok) {
         return {
@@ -140,7 +140,7 @@ function Extension() {
   };
 
   const CreateBTCPayOrder = async () => {
-    setLoading(true); 
+    setLoading(true);
     try {
       const createOrderPayload = {
         shopName: shopName,
@@ -150,7 +150,7 @@ function Extension() {
       };
       console.log('Creating BTCPay order...');
       const createOrderResponse = await fetch(`${btcPayUrl}/stores/${btcPayStoreId}/plugins/shopify/${shopName}/create-order`, {
-        method: 'POST', 
+        method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(createOrderPayload)
       });
@@ -159,13 +159,13 @@ function Extension() {
       }
       const orderData = await createOrderResponse.json();
       console.log('Order created successfully');
-      setModalContent(orderData); 
+      setModalContent(orderData);
     } catch (error) {
       setError(`Failed to load BTC Pay content: ${error.message}`);
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   // 2. Check instructions for feature availability, see https://shopify.dev/docs/api/checkout-ui-extensions/apis/cart-instructions for details
   if (!instructions.attributes.canUpdateAttributes) {
@@ -196,9 +196,9 @@ function Extension() {
               ui.overlay.open('btc-pay-modal');
             }}
             overlay={
-              <Modal 
-                id="btc-pay-modal" 
-                padding 
+              <Modal
+                id="btc-pay-modal"
+                padding
                 title={modalTitle}
                 onClose={async () => {
                   await setCheckTokenValidity(btcPayUrl, btcPayStoreId, shopName);
