@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18-alpine3.20
 
 # Install xdg-utils (BTCPay Server mod)
 RUN apk add --no-cache xdg-utils
