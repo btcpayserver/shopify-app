@@ -2,7 +2,7 @@
 
 client_id = "YOURCLIENT_ID"
 name = "BTCPay Server APPNAME"
-handle = "btcpay-server-appname"
+handle = "btcpay-server-APPNAME"
 application_url = "https://YOUR_HOSTED_APP_URL.COM/"
 embedded = true
 
