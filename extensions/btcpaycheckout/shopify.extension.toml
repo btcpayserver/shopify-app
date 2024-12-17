@@ -6,8 +6,8 @@
 api_version = "2024-10"
 
 [[extensions]]
-name = "btcpayserverpluginextension"
-handle = "btcpayserverpluginextension"
+name = "BTCPay Checkout"
+handle = "btcpaycheckout"
 type = "ui_extension"
 
 
