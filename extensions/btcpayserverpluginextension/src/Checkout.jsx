@@ -28,7 +28,6 @@ function Extension() {
   const { currencyCode, amount } = useTotalAmount();
   const instructions = useInstructions();
 
-  const shopifyApplicaitonUrl = 'https://btcpayshopifyplugin.vercel.app';
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [btcPayUrl, setBtcPayUrl] = useState(null);
@@ -69,6 +68,17 @@ function Extension() {
     }
   };
 
+  const retrieveBTCPayUrl = async (shopName) => {
+    const response = await fetch(
+      `/api/btcpaystores?shopName=${shopName}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      const { btcpayUrl, btcpayStoreId } = data.data;
+      return { btcpayUrl, btcpayStoreId };
+    } 
+  }; 
+
   const setCheckTokenValidity = async (btcpayurl, btcpaystoreId, shopName) => {
     try {
       const validationResponse = await validateCheckoutToken(btcpayurl, btcpaystoreId, shopName, checkoutToken.current); 
@@ -103,20 +113,6 @@ function Extension() {
       }, 3000);
     }
   };
-
-  const retrieveBTCPayUrl = async (shopName) => {
-    const response = await fetch(`${shopifyApplicaitonUrl}/api/btcpaystores?shopName=${shopName}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      const { btcpayUrl, btcpayStoreId } = data.data;
-      return { btcpayUrl, btcpayStoreId };
-    } 
-  }; 
   
   const validateCheckoutToken = async (btcpayUrl, btcpayStoreId, shopName, token) => {
     try {
