@@ -1,14 +1,14 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "75e5453a33db2962a714dda480eea008"
-name = "btcpayserverdemoplugin"
-handle = "btcpayserverdemoplugin"
-application_url = "https://btcpayshopifyplugin.vercel.app/"
+client_id = "YOURCLIENT_ID"
+name = "BTCPay Server APPNAME"
+handle = "btcpay-server-APPNAME"
+application_url = "https://YOUR_HOSTED_APP_URL.COM/"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = false
-dev_store_url = "quickstart-4c9539b2.myshopify.com"
+dev_store_url = "YOURDEV_STORE.myshopify.com"
 include_config_on_deploy = true
 
 [access_scopes]
@@ -17,9 +17,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://btcpayshopifyplugin.vercel.app/auth/callback",
-  "https://btcpayshopifyplugin.vercel.app/auth/shopify/callback",
-  "https://btcpayshopifyplugin.vercel.app/api/auth/callback"
+  "https://YOUR_HOSTED_APP_URL.COM/auth/callback",
+  "https://YOUR_HOSTED_APP_URL.COM/auth/shopify/callback",
+  "https://YOUR_HOSTED_APP_URL.COM/api/auth/callback"
 ]
 
 [webhooks]

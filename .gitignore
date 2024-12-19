@@ -15,11 +15,12 @@ database.sqlite-journal
 !.env.example
 
 
-
-
-
 /extensions/*/dist
 
 # Ignore shopify files created during app dev
 .shopify/*
 .shopify.lock
+
+# Ignore docker compose related folders
+/nginx
+/acme.sh

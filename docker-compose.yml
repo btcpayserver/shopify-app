@@ -14,6 +14,7 @@ services:
       - SCOPES=${SCOPES}
       - HOST=0.0.0.0
       - DOMAIN=${DOMAIN}
+      - DATABASE_URL=${DATABASE_URL}
     container_name: shopify-app
     volumes:
       - ./data:/app/data
