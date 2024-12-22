@@ -15,6 +15,7 @@ import {
   useSelectedPaymentOptions
 } from "@shopify/ui-extensions-react/checkout";
 import { useEffect, useState } from 'react';
+import { config } from '../config';
 
 // 1. Choose an extension target
 export default reactExtension(
@@ -40,6 +41,7 @@ function Extension() {
   const [modalTitle, setModalTitle] = useState('Pay with Bitcoin/Lightning Network');
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
   const options = useSelectedPaymentOptions();
+  const { appUrl } = config;
 
   useEffect(() => {
     const hasManualPaymentOption = options.some((option) => option.type.toLowerCase() === 'manualpayment');
@@ -70,7 +72,7 @@ function Extension() {
 
   const retrieveBTCPayUrl = async (shopName) => {
     const response = await fetch(
-      `/api/btcpaystores?shopName=${shopName}`
+      `${appUrl}/api/btcpaystores?shopName=${shopName}`
     );
     if (response.ok) {
       const data = await response.json();
