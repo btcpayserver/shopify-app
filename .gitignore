@@ -22,5 +22,6 @@ shopify.app.toml
 .shopify.lock
 
 # Ignore docker compose related folders
-/nginx
+/nginx/certs
+/nginx/html
 /acme.sh
