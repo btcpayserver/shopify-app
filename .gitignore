@@ -24,4 +24,5 @@ shopify.app.toml
 # Ignore docker compose related folders
 /nginx/certs
 /nginx/html
+/nginx/default.conf
 /acme.sh
