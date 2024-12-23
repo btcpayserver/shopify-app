@@ -72,7 +72,7 @@ function Extension() {
 
   const retrieveBTCPayUrl = async (shopName) => {
     const response = await fetch(
-      `${appUrl}/api/btcpaystores?shopName=${shopName}`
+      `https://${appUrl}/api/btcpaystores?shopName=${shopName}`
     );
     if (response.ok) {
       const data = await response.json();
