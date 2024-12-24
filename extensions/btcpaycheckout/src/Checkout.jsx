@@ -71,6 +71,7 @@ function Extension() {
   };
 
   const retrieveBTCPayUrl = async (shopName) => {
+    appUrl = appUrl.endsWith('/') ? appUrl.slice(0, -1) : appUrl;
     const response = await fetch(
       `${appUrl}/api/btcpaystores?shopName=${shopName}`
     );
