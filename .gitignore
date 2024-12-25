@@ -13,7 +13,7 @@ database.sqlite-journal
 .env
 .env.*
 !.env.example
-
+shopify.app.toml
 
 /extensions/*/dist
 
@@ -22,5 +22,7 @@ database.sqlite-journal
 .shopify.lock
 
 # Ignore docker compose related folders
-/nginx
+/nginx/certs
+/nginx/html
+/nginx/default.conf
 /acme.sh

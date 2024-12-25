@@ -1,0 +1,14 @@
+# add CORS headers
+add_header Access-Control-Allow-Origin '*';
+add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS, DELETE, PUT';
+add_header Access-Control-Allow-Headers 'Authorization, Content-Type, X-Shopify-Hmac-Sha256';
+
+# Preflight request handling
+if ($request_method = OPTIONS) {
+    add_header Access-Control-Allow-Origin '*';
+    add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS, DELETE, PUT';
+    add_header Access-Control-Allow-Headers 'Authorization, Content-Type, X-Shopify-Hmac-Sha256';
+    add_header Content-Length 0;
+    add_header Content-Type text/plain;
+    return 204;
+}
