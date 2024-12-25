@@ -73,8 +73,12 @@ function Extension() {
   const retrieveBTCPayUrl = async (shopName) => {
     appUrl = appUrl.endsWith('/') ? appUrl.slice(0, -1) : appUrl;
     const response = await fetch(
-      `https://${appUrl}/api/btcpaystores?shopName=${shopName}`
-    );
+      `https://${appUrl}/api/btcpaystores?shopName=${shopName}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
     if (response.ok) {
       const data = await response.json();
       const { btcpayUrl, btcpayStoreId } = data.data;
