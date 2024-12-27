@@ -1,45 +1,21 @@
-# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "YOURCLIENT_ID"
-name = "BTCPay Server APPNAME"
-handle = "btcpay-server-APPNAME"
-application_url = "https://YOUR_HOSTED_APP_URL.COM/"
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+name = "APP_NAME"
+
+client_id = "CLIENT_ID"
+application_url = "PLUGIN_URL"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = false
-dev_store_url = "YOURDEV_STORE.myshopify.com"
 include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+scopes = "read_orders,write_orders"
 
 [auth]
-redirect_urls = [
-  "https://YOUR_HOSTED_APP_URL.COM/auth/callback",
-  "https://YOUR_HOSTED_APP_URL.COM/auth/shopify/callback",
-  "https://YOUR_HOSTED_APP_URL.COM/api/auth/callback"
-]
+redirect_urls = ["PLUGIN_URL/checkout"]
 
 [webhooks]
 api_version = "2024-10"
 
-  [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/data_request"
-  compliance_topics = [ "customers/data_request" ]
-
-  [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/redact"
-  compliance_topics = [ "customers/redact" ]
-
-  [[webhooks.subscriptions]]
-  uri = "/webhooks/shop/redact"
-  compliance_topics = [ "shop/redact" ]
-
-  [[webhooks.subscriptions]]
-  topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
-
-[pos]
-embedded = false
