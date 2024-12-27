@@ -75,6 +75,7 @@ function Extension() {
     const response = await fetch(
       `https://${appUrl}/api/btcpaystores?shopName=${shopName}`,
       {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }

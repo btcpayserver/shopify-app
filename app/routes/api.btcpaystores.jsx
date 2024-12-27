@@ -6,13 +6,8 @@ export async function loader({ request }) {
     const url = new URL(request.url);
     const shopName = url.searchParams.get("shopName");
 
-    console.log(request.method)
-    console.log(request);
     if (request.method === "OPTIONS") {
-        const response = json({
-        status: 200,
-        });
-        return await cors(request, response);
+        return json({ status: 204 });
     }
 
     if (!shopName) {
@@ -22,6 +17,7 @@ export async function loader({ request }) {
             data: null
         });
     }
+
     const shop = `${shopName}.myshopify.com`;
     const btcpayServerRecord = await db.bTCPayServerStore.findFirst({
         where: { shop }
@@ -34,11 +30,9 @@ export async function loader({ request }) {
         });
     }
 
-    const response = json({
+    return json({
         ok: true,
         message: `Record found for shop: ${shopName}`,
         data: btcpayServerRecord
     });
-
-    return cors(request, response);
 }
