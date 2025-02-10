@@ -1,6 +1,6 @@
-import styles from "./_index/styles.module.css";
-import { login } from "../shopify.server"
-import { json, redirect } from "@remix-run/node";
+import styles from "./_index/styles.module.css"
+import { redirect, json } from '@remix-run/node';
+import { login } from "../shopify.server";
 
 export const loader = async ({ request }) => {
     const url = new URL(request.url);

@@ -14,8 +14,6 @@ export const loader = async ({ request }) => {
 };
 
 export default function App() {
-  const { showForm } = useLoaderData();
-
   return (
     <div className={styles.index}>
       <div className={styles.content}>
