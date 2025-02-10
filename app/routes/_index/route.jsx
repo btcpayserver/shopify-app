@@ -7,7 +7,7 @@ export const loader = async ({ request }) => {
   const url = new URL(request.url);
 
   if (url.searchParams.get("shop")) {
-    throw redirect(`/app?${url.searchParams.toString()}`);
+    throw redirect(`/shopifyapp/app?${url.searchParams.toString()}`);
   }
 
   return json({ showForm: Boolean(login) });

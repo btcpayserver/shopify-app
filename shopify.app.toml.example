@@ -3,7 +3,7 @@
 client_id = "YOURCLIENT_ID"
 name = "BTCPay Server APPNAME"
 handle = "btcpay-server-APPNAME"
-application_url = "https://YOUR_HOSTED_APP_URL.COM/"
+application_url = "https://YOUR_HOSTED_APP_URL.COM/shopifyapp/"
 embedded = true
 
 [build]
@@ -17,29 +17,29 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://YOUR_HOSTED_APP_URL.COM/auth/callback",
-  "https://YOUR_HOSTED_APP_URL.COM/auth/shopify/callback",
-  "https://YOUR_HOSTED_APP_URL.COM/api/auth/callback"
+  "https://YOUR_HOSTED_APP_URL.COM/shopifyapp/auth/callback",
+  "https://YOUR_HOSTED_APP_URL.COM/shopifyapp/auth/shopify/callback",
+  "https://YOUR_HOSTED_APP_URL.COM/shopifyapp/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2024-10"
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/data_request"
+  uri = "/shopifyapp/webhooks/customers/data_request"
   compliance_topics = [ "customers/data_request" ]
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/redact"
+  uri = "/shopifyapp/webhooks/customers/redact"
   compliance_topics = [ "customers/redact" ]
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/shop/redact"
+  uri = "/shopifyapp/webhooks/shop/redact"
   compliance_topics = [ "shop/redact" ]
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
+  uri = "/shopifyapp/webhooks/app/uninstalled"
 
 [pos]
 embedded = false
