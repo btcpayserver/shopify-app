@@ -38,10 +38,12 @@ function Extension() {
   const [isTokenValid, setIsTokenValid] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-  const [modalTitle, setModalTitle] = useState('Pay with Bitcoin/Lightning Network');
   const shopName = shop.myshopifyDomain.split('.myshopify.com')[0];
   const options = useSelectedPaymentOptions();
-  let { appUrl } = config;
+  let { appUrl, paymentMethodLabel } = config;
+  const defaultPaymentMethodLabel = paymentMethodLabel || "Pay with Bitcoin/Lightning Network";
+  const [modalTitle, setModalTitle] = useState(defaultPaymentMethodLabel);
+
 
   useEffect(() => {
     const hasManualPaymentOption = options.some((option) => option.type.toLowerCase() === 'manualpayment');
@@ -98,7 +100,6 @@ function Extension() {
         else{
           setIsTokenValid(true);
           setOrderId(validationResponse.data.orderId);
-          setModalTitle(validationResponse.data.paymentMethodDescription);
           setRetryCount(0);
         }
       } else {
