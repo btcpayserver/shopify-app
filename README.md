@@ -20,3 +20,7 @@ It streams back the logs of the deployment process to the client.
 This server is used by the [BTCPay Server Shopify plugin](https://github.com/btcpayserver/btcpayserver-shopify-plugin) in order to deploy the app.
 
 You can find installation instructions on our official documentation page: [BTCPay Server for Shopify](https://docs.btcpayserver.org/ShopifyV2/)
+
+## Maitainers
+
+The image is hosted on [docker hub](https://hub.docker.com/r/btcpayserver/shopify-app-deployer), to publish a new one, push a new tag to the repository. The github action is set up to create the image and upload it.
