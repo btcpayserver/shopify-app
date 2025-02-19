@@ -21,6 +21,8 @@ This server is used by the [BTCPay Server Shopify plugin](https://github.com/btc
 
 You can find installation instructions on our official documentation page: [BTCPay Server for Shopify](https://docs.btcpayserver.org/ShopifyV2/)
 
-## Maitainers
+## Maintainers
 
 The image is hosted on [docker hub](https://hub.docker.com/r/btcpayserver/shopify-app-deployer), to publish a new one, push a new tag to the repository. The github action is set up to create the image and upload it.
+
+Increment `VERSION` when you want the plugin to be able to notify the user that a new app deployment is needed.
