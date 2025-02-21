@@ -3,7 +3,8 @@ import {
   BlockStack,
   Button,
   Text,
-  useApi
+  useApi,
+  useSelectedPaymentOptions
 } from "@shopify/ui-extensions-react/checkout";
 
 // 1. Choose an extension target
@@ -13,16 +14,19 @@ export default reactExtension(
 );
 
 function Extension() {
+  const options = useSelectedPaymentOptions();
   const { shop, checkoutToken } = useApi();
+  const hasManualPayment = options.some((option) => option.type.toLowerCase() === 'manualpayment');
   const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken.current}`;
+
+  if (!hasManualPayment) return null;
+
   return (
-    <>
-        <BlockStack>
-          <Text>Shop name: {shop.name}</Text>
-          <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
-          <Text>Please review your order and complete the payment using BTCPay Server.</Text>
-          <Button to={appUrl} external>Complete Payment</Button>
-        </BlockStack>
-    </>
+    <BlockStack>
+      <Text>Shop name: {shop.name}</Text>
+      <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
+      <Text>Please review your order and complete the payment using BTCPay Server.</Text>
+      <Button to={appUrl} external>Complete Payment</Button>
+    </BlockStack>
   );
 }
