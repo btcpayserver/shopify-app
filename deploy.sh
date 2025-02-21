@@ -4,10 +4,10 @@ COMMIT="$(git log -1 --format=%H)"
 pushd .
 TEMP_DIR=$(mktemp -d)
 echo "COMMIT=${COMMIT}"
+echo "VERSION=$(git describe --tags --abbrev=0)"
 cd "$TEMP_DIR"
 echo "Creating plugin in directory: ${TEMP_DIR}"
 cp -rf /app/* "${TEMP_DIR}"
-echo "VERSION=$(git describe --tags --abbrev=0)"
 
 cp shopify.app.toml.example shopify.app.toml
 sed -i "s|APP_NAME|${APP_NAME}|g" shopify.app.toml
