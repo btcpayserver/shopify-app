@@ -7,7 +7,7 @@ echo "COMMIT=${COMMIT}"
 cd "$TEMP_DIR"
 echo "Creating plugin in directory: ${TEMP_DIR}"
 cp -rf /app/* "${TEMP_DIR}"
-echo "VERSION=$(cat VERSION)"
+echo "VERSION=$(git describe --tags --abbrev=0)"
 
 cp shopify.app.toml.example shopify.app.toml
 sed -i "s|APP_NAME|${APP_NAME}|g" shopify.app.toml
