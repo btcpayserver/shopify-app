@@ -21,14 +21,14 @@ function Extension() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const hasManualPayment = options.some((option) => option.type.toLowerCase() === 'manualpayment');
-  const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken.current}&redirect=true`;
+  const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken.current}`;
 
   useEffect(() => {
     if (!hasManualPayment) return;
     const fetchInvoice = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${appUrl.replace('redirect=true', 'redirect=false')}`, {
+        const response = await fetch(`${appUrl}&redirect=false`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
