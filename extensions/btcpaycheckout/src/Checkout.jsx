@@ -20,17 +20,15 @@ function Extension() {
   const { shop, checkoutToken } = useApi();
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
-  const baseUrl = "PLUGIN_URL";
   const hasManualPayment = options.some((option) => option.type.toLowerCase() === 'manualpayment');
-  const createInvoiceUrl = `${baseUrl}/create-invoice?checkout_token=${checkoutToken.current}`;
-  const checkoutUrl = `${baseUrl}/checkout?checkout_token=${checkoutToken.current}`;
+  const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken.current}&redirect=true`;
 
   useEffect(() => {
     if (!hasManualPayment) return;
     const fetchInvoice = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(createInvoiceUrl, {
+        const response = await fetch(`${appUrl.replace('redirect=true', 'redirect=false')}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
@@ -56,7 +54,7 @@ function Extension() {
           <Text>Shop name: {shop.name}</Text>
           <Text size="large" alignment="center" bold>Review and pay using BTCPay Server!</Text>
           <Text>Please review your order and complete the payment using BTCPay Server.</Text>
-          <Button to={checkoutUrl} external>Complete Payment</Button>
+          <Button to={appUrl} external>Complete Payment</Button>
         </>
       )}
     </BlockStack>
