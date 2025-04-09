@@ -20,6 +20,7 @@ function Extension() {
   const { shop, checkoutToken } = useApi();
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const hasManualPayment = options.some((option) => option.type.toLowerCase() === 'manualpayment');
   const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken.current}`;
 
@@ -35,7 +36,13 @@ function Extension() {
         if (response.ok) {
           setIsSuccess(true);
         }
-      } catch (error) {} 
+        else if (response.status !== 404) {
+          const errorText = await response.text();
+          setErrorMessage(`BTCPay Server Error. Failed to fetch invoice. ${errorText || response.statusText}`);
+        }
+      } catch (error) {
+        setErrorMessage(`BTCPay Server Error. ${error.message}`);
+      }
       finally {
         setIsLoading(false);
       }
@@ -49,6 +56,9 @@ function Extension() {
   return (
     <BlockStack>
       {isLoading && <Spinner />}
+      {!isLoading && errorMessage && (
+        <Text size="large" appearance="critical">{errorMessage}</Text>
+      )}
       {!isLoading && isSuccess && (
         <>
           <Text>Shop name: {shop.name}</Text>
