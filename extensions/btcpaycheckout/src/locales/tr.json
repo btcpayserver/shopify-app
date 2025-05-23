@@ -1,0 +1,10 @@
+{
+  "shop_name": "Dükkan adı",
+  "reviewAndPay": "BTCPay Server kullanarak yorum ve ödeme!",
+  "reviewOrderMessage": "Lütfen siparişinizi gözden geçirin ve BTCPay Server kullanarak ödeme tamamlayın.",
+  "complete_payment": "Tamam Ödeme",
+  "error": {
+    "fetch_invoice": "BTCPay Server Hatası. Fatura getirmek için başarısız oldu. {{error}}",
+    "general": "BTCPay Server Hatası. {{error}}"
+  }
+}

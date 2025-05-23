@@ -1,0 +1,10 @@
+{
+  "shop_name": "दुकान का नाम",
+  "reviewAndPay": "BTCPay सर्वर का उपयोग करके समीक्षा और भुगतान करें!",
+  "reviewOrderMessage": "कृपया अपने ऑर्डर की समीक्षा करें और BTCPay सर्वर का उपयोग करके भुगतान पूरा करें।.",
+  "complete_payment": "पूर्ण भुगतान",
+  "error": {
+    "fetch_invoice": "BTCPay सर्वर त्रुटि। चालान प्राप्त करने में विफल रहा।. {{error}}",
+    "general": "BTCPay सर्वर त्रुटि।. {{error}}"
+  }
+}
