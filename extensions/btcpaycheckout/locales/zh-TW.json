@@ -1,0 +1,10 @@
+{
+  "shop_name": "店名",
+  "reviewAndPay": "使用 BTCPay 伺服器去審查并支付!",
+  "reviewOrderMessage": "請回復您的訂單并用 BTCPay 伺服器完成支付 .",
+  "complete_payment": "全部付款",
+  "error": {
+    "fetch_invoice": "BTCPay 伺服器出錯 。 取回收據失敗 . {{error}}",
+    "general": "BTCPay 伺服器出錯 . {{error}}"
+  }
+}

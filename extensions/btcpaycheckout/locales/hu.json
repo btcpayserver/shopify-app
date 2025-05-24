@@ -1,0 +1,10 @@
+{
+  "shop_name": "A bolt neve",
+  "reviewAndPay": "Áttekintés és fizetés segítségével BTCPay Server!",
+  "reviewOrderMessage": "Kérjük, olvassa el megrendelését, és töltse ki a kifizetést a BTCPay Server használatával.",
+  "complete_payment": "Teljes kifizetés",
+  "error": {
+    "fetch_invoice": "BTCPay szerver hiba. Nem sikerült számlát beszerezni. {{error}}",
+    "general": "BTCPay szerver hiba. {{error}}"
+  }
+}

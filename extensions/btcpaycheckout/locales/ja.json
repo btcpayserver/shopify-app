@@ -1,0 +1,10 @@
+{
+  "shop_name": "店舗名",
+  "reviewAndPay": "BTCPayサーバーでのレビューと支払い!",
+  "reviewOrderMessage": "BTCPayサーバーを使用して注文を確認し、支払いを完了してください.",
+  "complete_payment": "完全な支払",
+  "error": {
+    "fetch_invoice": "BTCPayサーバーエラー。 請求書を受け取りませんでした. {{error}}",
+    "general": "BTCPayサーバーエラー. {{error}}"
+  }
+}
