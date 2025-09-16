@@ -17,5 +17,5 @@ scopes = "read_orders,write_orders"
 redirect_urls = ["PLUGIN_URL/checkout"]
 
 [webhooks]
-api_version = "2024-10"
+api_version = "2025-07"
 
