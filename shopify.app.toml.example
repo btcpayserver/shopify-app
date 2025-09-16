@@ -6,9 +6,6 @@ client_id = "CLIENT_ID"
 application_url = "PLUGIN_URL"
 embedded = true
 
-[build]
-include_config_on_deploy = true
-
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "read_orders,write_orders"
