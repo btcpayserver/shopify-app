@@ -1,0 +1,10 @@
+{
+  "shop_name": "Nome da loja",
+  "reviewAndPay": "Revise e pague usando BTCPay Server!",
+  "reviewOrderMessage": "Por favor revise seu pedido e complete o pagamento usando BTCPay Server.",
+  "complete_payment": "Completar Pagamento",
+  "error": {
+    "fetch_invoice": "Erro do BTCPay Server. Falha ao buscar fatura. {{error}}",
+    "general": "Erro do BTCPay Server. {{error}}"
+  }
+}

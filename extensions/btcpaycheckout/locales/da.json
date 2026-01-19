@@ -1,0 +1,10 @@
+{
+  "shop_name": "Handelsnavn",
+  "reviewAndPay": "Gennemgå og betale ved hjælp af BTCPAy Server!",
+  "reviewOrderMessage": "Gennemgå din ordre og fuldføre betalingen ved hjælp af BTCPAy Server.",
+  "complete_payment": "Fuldstændig betaling",
+  "error": {
+    "fetch_invoice": "BTCPay Server Fejl. Kunne ikke hente faktura. {{error}}",
+    "general": "BTCPay Server Fejl. {{error}}"
+  }
+}

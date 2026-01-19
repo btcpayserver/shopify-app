@@ -1,0 +1,10 @@
+{
+  "shop_name": "Shop name",
+  "reviewAndPay": "Granska och betala med BTCPay Server!",
+  "reviewOrderMessage": "Vänligen granska din beställning och slutföra betalningen med hjälp av BTCPay Server.",
+  "complete_payment": "Fullständig betalning",
+  "error": {
+    "fetch_invoice": "BTCPay Server Fel. Misslyckades med att hämta faktura. {{error}}",
+    "general": "BTCPay Server Fel. {{error}}"
+  }
+}

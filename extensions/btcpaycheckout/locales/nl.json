@@ -1,0 +1,10 @@
+{
+  "shop_name": "Winkelnaam",
+  "reviewAndPay": "Bekijk en betaal met BTCPay Server!",
+  "reviewOrderMessage": "Bekijk uw bestelling en vul de betaling met BTCPay Server.",
+  "complete_payment": "Volledige betaling",
+  "error": {
+    "fetch_invoice": "BTCPay-serverfout Ophalen van factuur is mislukt. {{error}}",
+    "general": "BTCPay-serverfout. {{error}}"
+  }
+}
