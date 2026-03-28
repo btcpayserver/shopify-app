@@ -1,0 +1,10 @@
+{
+  "shop_name": "Název obchodu",
+  "reviewAndPay": "Zkontrolujte a zaplaťte pomocí BTCpay Server!",
+  "reviewOrderMessage": "Prosím, zkontrolujte si objednávku a vyplňte platbu pomocí BTCpay Server.",
+  "complete_payment": "Kompletní platba",
+  "error": {
+    "fetch_invoice": "Chyba BTCpay Serveru. Nepodařilo se získat fakturu. {{error}}",
+    "general": "Chyba BTCpay Serveru. {{error}}"
+  }
+}

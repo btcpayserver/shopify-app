@@ -1,0 +1,10 @@
+{
+  "shop_name": "가게 이름",
+  "reviewAndPay": "BTCPay Server를 사용하여 검토 및 지불!",
+  "reviewOrderMessage": "주문을 검토하고 BTCPay Server를 사용하여 지불을 완료하십시오.",
+  "complete_payment": "결제 완료",
+  "error": {
+    "fetch_invoice": "BTCPay 서버 오류. 청구서에 실패. {{error}}",
+    "general": "BTCPay 서버 오류. {{error}}"
+  }
+}

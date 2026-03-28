@@ -1,0 +1,10 @@
+{
+  "shop_name": "Tên cửa hàng",
+  "reviewAndPay": "Xem lại và trả tiền bằng máy chủ trả tiền BTC!",
+  "reviewOrderMessage": "Vui lòng xem lại đơn đặt hàng và hoàn tất việc thanh toán bằng máy phục vụ trả tiền BTC.",
+  "complete_payment": "Trả tiền đầy đủ",
+  "error": {
+    "fetch_invoice": "Lỗi trình phục vụ trả tiền BTC. Không lấy được hóa đơn. {{error}}",
+    "general": "Lỗi trình phục vụ trả tiền BTC. {{error}}"
+  }
+}

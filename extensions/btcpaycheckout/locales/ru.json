@@ -1,0 +1,10 @@
+{
+  "shop_name": "Название магазина",
+  "reviewAndPay": "Обзор и оплата с помощью BTCPay Server!",
+  "reviewOrderMessage": "Пожалуйста, просмотрите ваш заказ и заполните оплату с помощью BTCPay Server.",
+  "complete_payment": "Полный платеж",
+  "error": {
+    "fetch_invoice": "Ошибка BTCPay Server. Не удалось получить счет. {{error}}",
+    "general": "Ошибка BTCPay Server. {{error}}"
+  }
+}

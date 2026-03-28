@@ -1,0 +1,10 @@
+{
+  "shop_name": "Kaupan nimi",
+  "reviewAndPay": "Tarkista ja maksa käyttäen BTCPay Server!",
+  "reviewOrderMessage": "Tarkista tilauksesi ja suorita maksu BTCPay-palvelimella.",
+  "complete_payment": "Täydellinen maksu",
+  "error": {
+    "fetch_invoice": "BTCPay-palvelinvirhe. Laskun nouto epäonnistui. {{error}}",
+    "general": "BTCPay-palvelinvirhe. {{error}}"
+  }
+}
