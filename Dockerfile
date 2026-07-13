@@ -1,9 +1,10 @@
-FROM node:20-alpine3.20
+FROM node:22-alpine3.20
 
 # Install xdg-utils (BTCPay Server mod)
 RUN apk add --no-cache bash xdg-utils git
 # Install Shopify CLI globally (BTCPay Server mod)
-RUN npm install -g @shopify/cli@3.92.1
+RUN npm install -g @shopify/cli@4.4.0
+RUN shopify config autoupgrade off
 
 EXPOSE 3000
 
