@@ -22,9 +22,9 @@ function Extension() {
 
     let cancelled = false;
     const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken}`;
-    const MAX_ATTEMPTS = 3;
 
-    const fetchInvoice = async (attempt = 0) => {
+    const fetchInvoice = async () => {
+      if (cancelled) return;
       setIsLoading(true);
       try {
         const response = await fetch(`${appUrl}&redirect=false`, {
@@ -36,17 +36,11 @@ function Extension() {
         if (response.ok) {
           setIsSuccess(true);
           setIsLoading(false);
-        } else if (response.status === 404 && attempt < MAX_ATTEMPTS) {
-          setTimeout(() => fetchInvoice(attempt + 1), 1000 * (attempt + 1));
           return;
-        } else if (response.status !== 404) {
-          const errorText = await response.text();
-          setErrorMessage(translate("error.fetch_invoice", { error: errorText || response.statusText }));
-          setIsLoading(false);
-        } else {
-          setErrorMessage(translate("error.fetch_invoice", { error: 'Order not found after retries' }));
-          setIsLoading(false);
         }
+        const errorText = await response.text();
+        setErrorMessage(translate('error.fetch_invoice', { error: errorText || response.statusText }));
+        setIsLoading(false);
       } catch (error) {
         if (!cancelled) {
           setErrorMessage(translate('error.general', { error: error.message }));
@@ -55,8 +49,11 @@ function Extension() {
       }
     };
 
-    fetchInvoice();
-    return () => { cancelled = true; };
+    const initialDelay = setTimeout(fetchInvoice, 2000);
+    return () => { 
+      cancelled = true;
+      clearTimeout(initialDelay);
+    };
   }, [hasManualPayment, checkoutToken]);
 
   if (!hasManualPayment) return null;
