@@ -16,7 +16,7 @@ sed -i "s|PLUGIN_URL|${PLUGIN_URL}|g" shopify.app.toml
 sed -i "s|PLUGIN_URL|${PLUGIN_URL}|g" extensions/btcpaycheckout/src/Checkout.jsx
 echo "Settings saved"
 
-if shopify app deploy -f --no-color; then
+if shopify app deploy --allow-updates --no-color; then
 echo "SUCCESS=true"
 else
 echo "SUCCESS=false"
