@@ -61,7 +61,12 @@ function Extension() {
   return (
     <s-box padding="base" border="base" borderRadius="base">
       <s-stack direction="block" gap="base">
-        {isLoading && <s-spinner />}
+        {isLoading && (
+          <s-stack direction="block" gap="tight">
+            <s-spinner size="large" />
+            <s-text>{translate('generating_invoice')}</s-text>
+          </s-stack>
+        )}
         {!isLoading && errorMessage && (
           <s-text tone="critical" type="strong">{errorMessage}</s-text>
         )}
