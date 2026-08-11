@@ -3,8 +3,16 @@ const { spawn } = require('child_process');
 
 const app = express();
 app.use(express.json());
+
+let deployInProgress = false;
+
 app.post('/deploy', (req, res) => {
-    const process = spawn('bash', ['/app/deploy.sh'],
+    if (deployInProgress) {
+        return res.status(429).send('A deploy is already in progress. Try again shortly.\n');
+    }
+    deployInProgress = true;
+    
+    const child = spawn('bash', ['/app/deploy.sh'],
         {
             env: 
             {
@@ -15,17 +23,23 @@ app.post('/deploy', (req, res) => {
             }
         });
     res.setHeader('Content-Type', 'text/plain');
-    process.stdout.on('data', (data) => {
+    child.stdout.on('data', (data) => {
         res.write(data.toString()); // Stream stdout
     });
 
-    process.stderr.on('data', (data) => {
+    child.stderr.on('data', (data) => {
         res.write(data.toString()); // Stream stderr
     });
 
-    process.on('close', (code) => {
+    child.on('close', (code) => {
+        deployInProgress = false;
         res.end(`\nProcess exited with code ${code}\n`);
     });
-    });
+
+    child.on('error', (err) => {
+        deployInProgress = false;
+        res.status(500).end(`Failed to start deploy: ${err.message}\n`)
+    })
+});
 
 app.listen(5000, () => console.log('Server running on port 5000'));
