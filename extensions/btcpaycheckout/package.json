@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test"
+  },
   "dependencies": {
     "preact": "^10.10.x",
     "@preact/signals": "^2.3.x",

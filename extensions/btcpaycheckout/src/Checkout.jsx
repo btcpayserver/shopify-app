@@ -2,6 +2,10 @@ import '@shopify/ui-extensions/preact';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
+import { fetchInvoiceWithSingleSafeRetry } from './invoice-retry.mjs';
+
+const CHECKOUT_TOKEN_WAIT_MS = 10000;
+
 export default function extension() {
   render(<Extension />, document.body);
 }
@@ -14,45 +18,75 @@ function Extension() {
   const hasManualPayment = options.some((option) => option.type.toLowerCase() === 'manualpayment');
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [successfulCheckoutToken, setSuccessfulCheckoutToken] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (!hasManualPayment || !checkoutToken) return;
+    if (!hasManualPayment) return;
 
     let cancelled = false;
-    const appUrl = `PLUGIN_URL/checkout?checkout_token=${checkoutToken}`;
+    let retryTimer;
+    let resolvePendingDelay;
+
+    setIsLoading(true);
+    setSuccessfulCheckoutToken('');
+    setErrorMessage('');
+
+    if (!checkoutToken) {
+      retryTimer = setTimeout(() => {
+        if (cancelled) return;
+        setErrorMessage(translate('error.checkout_not_ready'));
+        setIsLoading(false);
+      }, CHECKOUT_TOKEN_WAIT_MS);
+
+      return () => {
+        cancelled = true;
+        clearTimeout(retryTimer);
+      };
+    }
+
+    const appUrl = `PLUGIN_URL/checkout?checkout_token=${encodeURIComponent(checkoutToken)}`;
+
+    const sleep = (delayMs) => new Promise((resolve) => {
+      resolvePendingDelay = resolve;
+      retryTimer = setTimeout(() => {
+        retryTimer = undefined;
+        resolvePendingDelay = undefined;
+        resolve();
+      }, delayMs);
+    });
 
     const fetchInvoice = async () => {
-      if (cancelled) return;
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${appUrl}&redirect=false`, {
+      const result = await fetchInvoiceWithSingleSafeRetry({
+        request: () => fetch(`${appUrl}&redirect=false`, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        });
-        if (cancelled) return;
+        }),
+        sleep,
+        isCancelled: () => cancelled,
+      });
 
-        if (response.ok) {
-          setIsSuccess(true);
-          setIsLoading(false);
-          return;
-        }
-        const errorText = await response.text();
-        setErrorMessage(translate('error.fetch_invoice', { error: errorText || response.statusText }));
+      if (cancelled || result.type === 'cancelled') return;
+
+      if (result.type === 'success') {
+        setSuccessfulCheckoutToken(checkoutToken);
         setIsLoading(false);
-      } catch (error) {
-        if (!cancelled) {
-          setErrorMessage(translate('error.general', { error: error.message }));
-          setIsLoading(false);
-        }
+        return;
       }
+
+      const safeError = result.type === 'http_failure'
+        ? `${result.response.status} ${result.response.statusText}`.trim()
+        : translate('error.network');
+
+      setErrorMessage(translate('error.fetch_invoice', { error: safeError }));
+      setIsLoading(false);
     };
 
-    const initialDelay = setTimeout(fetchInvoice, 2000);
-    return () => { 
+    fetchInvoice();
+
+    return () => {
       cancelled = true;
-      clearTimeout(initialDelay);
+      clearTimeout(retryTimer);
+      resolvePendingDelay?.();
     };
   }, [hasManualPayment, checkoutToken]);
 
@@ -70,12 +104,12 @@ function Extension() {
         {!isLoading && errorMessage && (
           <s-text tone="critical" type="strong">{errorMessage}</s-text>
         )}
-        {!isLoading && isSuccess && (
+        {!isLoading && successfulCheckoutToken === checkoutToken && (
           <>
             <s-text>{translate('shop_name')}: {shop.name}</s-text>
             <s-text type="strong">{translate('reviewAndPay')}</s-text>
             <s-text>{translate('reviewOrderMessage')}.</s-text>
-            <s-button href={`PLUGIN_URL/checkout?checkout_token=${checkoutToken}`} target="_blank" variant="primary">
+            <s-button href={`PLUGIN_URL/checkout?checkout_token=${encodeURIComponent(checkoutToken)}`} target="_blank" variant="primary">
               {translate('complete_payment')}
             </s-button>
           </>
